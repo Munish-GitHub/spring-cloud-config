@@ -38,3 +38,18 @@ http://localhost:8080/limits
 {"minimum":1,"maximum":111}
 
 As the dev profile is active in limit service bootstrap properties, above will be the response.
+
+As a fault tolerant, the limit service also implements fault tolerant behaviour using Spring cloud hystrix. Check the code present in LimitConfigurationController:
+
+	@GetMapping("/fault-tolerance-example")
+	@HystrixCommand(fallbackMethod="fallbackRetrieveConf")
+	public LimitsConfiguration retrieveConf(){
+		throw new RuntimeException("NOt available");
+	}
+	
+	
+	public LimitsConfiguration fallbackRetrieveConf(){
+		return new LimitsConfiguration(9,999);
+	}
+	
+Hit /fault-tolerance-example with 8080 url and you will get limits as defined in fallbackRetrieveConf().
