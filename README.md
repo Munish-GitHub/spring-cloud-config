@@ -1,9 +1,6 @@
 # spring-cloud-config
 
 Application contains two projects:
-1. Config Server
-2. Limit Service
-
 1. Config Server uses spring-cloud-config-server to send the limit response back to limit service.
 
 Config Server confiugration:
